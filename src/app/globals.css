@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #e6e7eb;
+}
+button {
+  @apply border border-gray-200 bg-gray-200 px-4 py-2 text-gray-900;
+}
+.ghostClass {
+  @apply bg-blue-200 opacity-40;
+}
+button[type="submit"] {
+  @apply rounded-md border-blue-500 bg-blue-500 text-white;
+}
+input[type="text"] {
+  @apply block w-full rounded-md;
+}
