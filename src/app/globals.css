@@ -3,14 +3,18 @@
 @tailwind utilities;
 
 body {
-  background-color: #e6e7eb;
+  background-color: #575757;
 }
+
+.primary,
+button[type="button"],
 button {
   @apply border border-gray-200 bg-gray-200 px-4 py-2 text-gray-900;
 }
 .ghostClass {
   @apply bg-blue-200 opacity-40;
 }
+.primary,
 button[type="submit"] {
   @apply rounded-md border-blue-500 bg-blue-500 text-white;
 }
