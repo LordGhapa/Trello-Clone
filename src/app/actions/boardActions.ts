@@ -5,6 +5,7 @@ import { getUserEmail } from "@/lib/useClient";
 import { Liveblocks, RoomInfo } from "@liveblocks/node";
 import { randomBytes } from "crypto";
 import { getServerSession } from "next-auth";
+import  uniqid  from "uniqid";
 
 export async function createBoard(name: string): Promise<RoomInfo | boolean> {
   // const secretKey = process.env.LIVEBLOCKS_SECRET_KEY;
@@ -16,7 +17,8 @@ export async function createBoard(name: string): Promise<RoomInfo | boolean> {
   //   secret: secretKey,
   // });
 
-  const roomId = randomBytes(8).toString("hex");
+  const roomId = uniqid.time();
+ 
 
   const email = await getUserEmail();
   if (typeof email === "string") {

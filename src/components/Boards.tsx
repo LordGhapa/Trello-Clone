@@ -15,7 +15,7 @@ export default async function Boards() {
   }
 
   return (
-    <div className="grid md:grid-cols-4 gap-2 py-4">
+    <div className="grid gap-2 py-4 md:grid-cols-4">
       {rooms.length > 0 ? (
         rooms.map((room) => (
           <Link
@@ -27,7 +27,7 @@ export default async function Boards() {
           </Link>
         ))
       ) : (
-        <p>No rooms found.</p>
+        <p>Quadro de atividades não encontrado.</p>
       )}
     </div>
   );
