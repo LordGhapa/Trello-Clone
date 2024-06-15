@@ -1,24 +1,13 @@
 "use server";
-import { authOptions } from "@/lib/authOptions";
+
 import { liveblocksClient } from "@/lib/liveblocksClient";
 import { getUserEmail } from "@/lib/useClient";
-import { Liveblocks, RoomInfo } from "@liveblocks/node";
-import { randomBytes } from "crypto";
-import { getServerSession } from "next-auth";
-import  uniqid  from "uniqid";
+import { RoomAccesses, RoomInfo, RoomPermission } from "@liveblocks/node";
+
+import uniqid from "uniqid";
 
 export async function createBoard(name: string): Promise<RoomInfo | boolean> {
-  // const secretKey = process.env.LIVEBLOCKS_SECRET_KEY;
-  // if (!secretKey) {
-  //   throw new Error("LIVEBLOCKS_SECRET_KEY não está definido");
-  // }
-
-  // const liveblocksClient = new Liveblocks({
-  //   secret: secretKey,
-  // });
-
   const roomId = uniqid.time();
- 
 
   const email = await getUserEmail();
   if (typeof email === "string") {
@@ -39,4 +28,34 @@ export async function createBoard(name: string): Promise<RoomInfo | boolean> {
     }
   }
   return false;
+}
+
+export async function addEmailAccessToBoard(boardId: string, email: string) {
+  const room = await liveblocksClient.getRoom(boardId);
+  const usersAccesses = room.usersAccesses;
+  usersAccesses[email] = ["room:write"];
+
+  await liveblocksClient.updateRoom(boardId, { usersAccesses });
+  return true;
+}
+
+export async function removeEmailFromBoard(boardId: string, email: string) {
+  const room = await liveblocksClient.getRoom(boardId);
+  const usersAccesses: any = room.usersAccesses;
+
+  if (usersAccesses) {
+    //se tenta da delete usersAccesses[email] nao vao funcionar coisa própria do liveblocks
+    usersAccesses[email] = null;
+    await liveblocksClient.updateRoom(boardId, {
+      usersAccesses: usersAccesses,
+    });
+  }
+
+  return true;
+}
+
+export async function deleteBoard(boardId: string) {
+  await liveblocksClient.deleteRoom(boardId);
+
+  return true;
 }

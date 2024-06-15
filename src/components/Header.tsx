@@ -16,7 +16,9 @@ export default async function Header() {
         <div>
           {!!session === true ? (
             <>
-              Ola, {session?.user?.name}
+              <span title={session.user?.email ?? ""}>
+                Ola, {session?.user?.name}
+              </span>
               <LogoutButton />
             </>
           ) : (

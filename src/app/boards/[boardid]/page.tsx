@@ -3,13 +3,12 @@ import { getUserEmail } from "@/lib/useClient";
 import { liveblocksClient } from "@/lib/liveblocksClient";
 import Board from "@/components/Board";
 
-
 type pageProps = {
-  params: { boardid: string };
+  params: { boardId: string };
 };
-export default async function BoardPage({ params: { boardid } }: pageProps) {
+export default async function BoardPage({ params: { boardId } }: pageProps) {
   const UserEmail = await getUserEmail();
-  const BoardInfo = await liveblocksClient.getRoom(boardid);
+  const BoardInfo = await liveblocksClient.getRoom(boardId);
 
   const userAccess = BoardInfo?.usersAccesses?.[`${UserEmail}`];
   let hasAccess = userAccess && [...userAccess].includes("room:write");
@@ -20,8 +19,8 @@ export default async function BoardPage({ params: { boardid } }: pageProps) {
 
   return (
     <div>
-      Quadro de Atividades: {BoardInfo.metadata.boardName}
-      <Board id={boardid} />
+      {/* Quadro de Atividades: {BoardInfo.metadata.boardName} */}
+      <Board name={BoardInfo.metadata.boardName as string} id={boardId} />
     </div>
   );
 }

@@ -22,6 +22,7 @@ export default function NewColumnForm() {
   function handleNewColumn(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const input = e.currentTarget.querySelector("input");
+     if (input?.value.trim().length === 0) return;
     if (input) {
       const columnName = input?.value;
       addColumn(columnName);

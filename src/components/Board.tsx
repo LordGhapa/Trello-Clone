@@ -4,40 +4,39 @@ import { RoomProvider } from "@/app/liveblocks.config";
 import { LiveList } from "@liveblocks/client";
 import { ClientSideSuspense } from "@liveblocks/react";
 import Columns from "./Columns";
-
-// const defaultColumns = [
-//   { id: "col 1", name: "A fazer", index: 0 },
-//   { id: "col 2", name: "Em progresso", index: 1 },
-//   { id: "col 3", name: "Finalizado", index: 2 },
-// ];
-
-
-// const defaultCards: CardType[] = [
-//   { id: "alal0", name: "todo1", index: 0, columnId: "col 1" },
-//   { id: "alal1", name: "todo2", index: 1, columnId: "col 1" },
-//   { id: "alal2", name: "em progresso 1", index: 0, columnId: "col 2" },
-//   { id: "alal3", name: "em progresso 2", index: 1, columnId: "col 2" },
-//   { id: "alal4", name: "finalizado 1", index: 0, columnId: "col 3" },
-//   { id: "alal5", name: "finalizado 2", index: 1, columnId: "col 3" },
-// ];
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 type BoardProps = {
   id: string;
+  name: string;
 };
-export default function Board({ id }: BoardProps) {
-
+export default function Board({ id, name }: BoardProps) {
   return (
     <RoomProvider
       id={id}
       initialPresence={{}}
       initialStorage={{
         columns: new LiveList(),
-        cards: new LiveList()
+        cards: new LiveList(),
       }}
     >
       <ClientSideSuspense fallback={<div>"Carregando..."</div>}>
         {() => (
           <>
+            <div className="mb-4 flex items-center justify-between gap-2">
+              <div>
+                <h1 className="text-2xl">Quadro de Atividades: {name}</h1>
+              </div>
+              <Link
+                className="btn flex items-center gap-2"
+                href={`/boards/${id}/settings`}
+              >
+                <FontAwesomeIcon icon={faCog} />
+                Configurações
+              </Link>
+            </div>
             <Columns />
           </>
         )}

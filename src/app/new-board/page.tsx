@@ -2,8 +2,14 @@
 
 import { redirect } from "next/navigation";
 import { createBoard } from "../actions/boardActions";
+import UserNotLogger from "@/components/UserNotLogger";
+
+import { getSession, useSession } from "next-auth/react";
 
 export default function NewBoardPage() {
+  const session = useSession();
+  if (!session.data) return <UserNotLogger />;
+
   const handleNewBoardSubmit = async (formData: FormData) => {
     const boardName = formData.get("name")?.toString() || "";
     const result = await createBoard(boardName);
