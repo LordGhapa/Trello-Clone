@@ -19,7 +19,6 @@ export default async function BoardPage({ params: { boardId } }: pageProps) {
 
   return (
     <div>
-      {/* Quadro de Atividades: {BoardInfo.metadata.boardName} */}
       <Board name={BoardInfo.metadata.boardName as string} id={boardId} />
     </div>
   );

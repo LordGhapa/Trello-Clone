@@ -59,3 +59,11 @@ export async function deleteBoard(boardId: string) {
 
   return true;
 }
+export async function updateBoard(boardId: string, newNameBoard: string) {
+  const newName =  { boardName: newNameBoard } 
+  await liveblocksClient.updateRoom(boardId, {
+    metadata: newName,
+  });
+
+  return true;
+}
