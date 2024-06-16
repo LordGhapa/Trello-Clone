@@ -12,11 +12,8 @@ export default function Columns() {
   );
 
   const updateColumns = useMutation( ({ storage }, columns: LiveObject<ColumnType>[]) => {
-
-
       storage.set("columns", new LiveList(columns));
     },
-
     [],
   );
 

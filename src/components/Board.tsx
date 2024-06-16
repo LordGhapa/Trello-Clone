@@ -7,7 +7,7 @@ import Columns from "./Columns";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { updateBoard } from "@/app/actions/boardActions";
+import { updateBoardName } from "@/app/actions/boardActions";
 import { useRouter } from "next/navigation";
 
 type BoardProps = {
@@ -24,7 +24,7 @@ export default function Board({ id, name }: BoardProps) {
     if (input?.value.trim().length === 0) return;
 
     if (input) {
-      await updateBoard(id, input.value);
+      await updateBoardName(id, input.value);
       setRenameMode(false);
     }
     route.refresh();
@@ -53,7 +53,12 @@ export default function Board({ id, name }: BoardProps) {
                 )}
                 {renameMode && (
                   <form onSubmit={handleNameSubmit}>
-                    <input type="text" defaultValue={name} />
+                    <input
+                      type="text"
+                      autoFocus
+                      defaultValue={name}
+                      onBlur={() => setRenameMode(false)}
+                    />
                   </form>
                 )}
               </div>

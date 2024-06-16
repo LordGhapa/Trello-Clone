@@ -1,11 +1,14 @@
 "use client";
 
 import { CardType, useMutation } from "@/app/liveblocks.config";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LiveObject } from "@liveblocks/client";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import uniqid from "uniqid";
 
 export default function NewCardForm({ columnId }: { columnId: string }) {
+  const [createMode, setCreateMode] = useState(false);
   const addCard = useMutation(
     ({ storage }, cardName) => {
       return storage.get("cards").push(
@@ -25,7 +28,7 @@ export default function NewCardForm({ columnId }: { columnId: string }) {
     const input = e.currentTarget.querySelector("input");
     if (input?.value.trim().length === 0) return;
     if (input) {
-      const cardName = input?.value;
+      const cardName = input?.value.trim();
       addCard(cardName);
       input.value = "";
     }
@@ -33,13 +36,10 @@ export default function NewCardForm({ columnId }: { columnId: string }) {
 
   return (
     <form className="max-w-xs" onSubmit={handleNewCard}>
-      <label htmlFor="" className="block  ">
-        <span className="block text-gray-600">Novo cartão</span>
-        <input type="text" name="" id="" placeholder="Nome do cartão" />
+      <label className=" block">
+        <input type="text" placeholder="Novo cartão" />
+  
       </label>
-      <button type="submit" className="mt-2 block w-full">
-        Criar
-      </button>
     </form>
   );
 }

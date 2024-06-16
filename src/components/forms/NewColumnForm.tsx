@@ -24,7 +24,7 @@ export default function NewColumnForm() {
     const input = e.currentTarget.querySelector("input");
      if (input?.value.trim().length === 0) return;
     if (input) {
-      const columnName = input?.value;
+      const columnName = input?.value.trim();
       addColumn(columnName);
       input.value = "";
     }

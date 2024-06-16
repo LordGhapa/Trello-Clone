@@ -17,9 +17,8 @@ export default function NewBoardAccessForm({
     const email = e.currentTarget.querySelector("input");
     if (email?.value.trim().length === 0) return;
     if (email) {
-      addEmailAccessToBoard(boardId, email.value);
+      addEmailAccessToBoard(boardId, email.value.trim());
       email.value = "";
-      
     }
 
     route.refresh();
