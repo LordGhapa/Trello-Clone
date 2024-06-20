@@ -12,6 +12,7 @@ import {
   faEllipsis,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import Card from "./Card";
 
 type ColumnsProps = {
   id: string;
@@ -130,12 +131,7 @@ export default function Column({ id, name }: ColumnsProps) {
           >
             {!renameMode &&
               columnCards.map((card: CardType) => (
-                <div
-                  key={card.id}
-                  className="my-2 rounded-md border bg-white p-4"
-                >
-                  <span>{card.name}</span>
-                </div>
+                <Card key={card.id} id={card.id} name={card.name} />
               ))}
           </ReactSortable>
         </>

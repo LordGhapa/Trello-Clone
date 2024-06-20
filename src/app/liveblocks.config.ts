@@ -13,6 +13,21 @@ export type CardType = {
   columnId: string;
 };
 
+type UserMeta = {
+  id: string;
+  info: {
+    name: string;
+    email: string;
+    image: string;
+  };
+};
+
+type RoomEvent = {};
+
+type ThreadMetadata = {
+  cardId: string;
+};
+
 const client = createClient({
   authEndpoint: "/api/liveblocks-auth",
   throttle: 100,
@@ -26,6 +41,11 @@ type Storage = {
 };
 
 export const {
+  useUpdateMyPresence,
+  useRoom,
+  useSelf,
+  useOthers,
+  useThreads,
   RoomProvider,
   useMyPresence,
   useStorage,
@@ -33,6 +53,9 @@ export const {
   /* ...all the other hooks you’re using... */
 } = createRoomContext<
   Presence,
-  Storage
+  Storage,
+  UserMeta,
+  RoomEvent,
+  ThreadMetadata
   /* UserMeta, RoomEvent, ThreadMetadata */
 >(client);

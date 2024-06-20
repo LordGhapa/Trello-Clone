@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { updateBoardName } from "@/app/actions/boardActions";
 import { useRouter } from "next/navigation";
+import { BoardContextProvider } from "@/app/context/BoardContext";
 
 type BoardProps = {
   id: string;
@@ -30,50 +31,52 @@ export default function Board({ id, name }: BoardProps) {
     route.refresh();
   };
   return (
-    <RoomProvider
-      id={id}
-      initialPresence={{}}
-      initialStorage={{
-        columns: new LiveList(),
-        cards: new LiveList(),
-      }}
-    >
-      <ClientSideSuspense fallback={<div>"Carregando..."</div>}>
-        {() => (
-          <>
-            <div className="mb-4 flex items-center justify-between gap-2">
-              <div>
-                {!renameMode && (
-                  <h1
-                    className="cursor-pointer text-2xl"
-                    onClick={() => setRenameMode(true)}
-                  >
-                    Quadro de Atividades: {name}
-                  </h1>
-                )}
-                {renameMode && (
-                  <form onSubmit={handleNameSubmit}>
-                    <input
-                      type="text"
-                      autoFocus
-                      defaultValue={name}
-                      onBlur={() => setRenameMode(false)}
-                    />
-                  </form>
-                )}
+    
+      <RoomProvider
+        id={id}
+        initialPresence={{}}
+        initialStorage={{
+          columns: new LiveList(),
+          cards: new LiveList(),
+        }}
+      >
+        <ClientSideSuspense fallback={<div>"Carregando..."</div>}>
+          {() => (
+            <>
+              <div className="mb-4 flex items-center justify-between gap-2">
+                <div>
+                  {!renameMode && (
+                    <h1
+                      className="cursor-pointer text-2xl"
+                      onClick={() => setRenameMode(true)}
+                    >
+                      Quadro de Atividades: {name}
+                    </h1>
+                  )}
+                  {renameMode && (
+                    <form onSubmit={handleNameSubmit}>
+                      <input
+                        type="text"
+                        autoFocus
+                        defaultValue={name}
+                        onBlur={() => setRenameMode(false)}
+                      />
+                    </form>
+                  )}
+                </div>
+                <Link
+                  className="btn flex items-center gap-2"
+                  href={`/boards/${id}/settings`}
+                >
+                  <FontAwesomeIcon icon={faCog} />
+                  Configurações
+                </Link>
               </div>
-              <Link
-                className="btn flex items-center gap-2"
-                href={`/boards/${id}/settings`}
-              >
-                <FontAwesomeIcon icon={faCog} />
-                Configurações
-              </Link>
-            </div>
-            <Columns />
-          </>
-        )}
-      </ClientSideSuspense>
-    </RoomProvider>
+              <Columns />
+            </>
+          )}
+        </ClientSideSuspense>
+      </RoomProvider>
+    
   );
 }
