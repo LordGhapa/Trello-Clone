@@ -6,7 +6,6 @@ import { FormEvent } from "react";
 import uniqid from "uniqid";
 
 export default function NewColumnForm() {
-
   const addColumn = useMutation(({ storage }, columnName) => {
     return storage.get("columns").push(
       new LiveObject({
@@ -17,12 +16,10 @@ export default function NewColumnForm() {
     );
   }, []);
 
-
-
   function handleNewColumn(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const input = e.currentTarget.querySelector("input");
-     if (input?.value.trim().length === 0) return;
+    if (input?.value.trim().length === 0) return;
     if (input) {
       const columnName = input?.value.trim();
       addColumn(columnName);
@@ -31,10 +28,13 @@ export default function NewColumnForm() {
   }
 
   return (
-    <form className="max-w-xs" onSubmit={handleNewColumn}>
+    <form
+      className="w-full min-w-[150px] max-w-[250px]"
+      onSubmit={handleNewColumn}
+    >
       <label htmlFor="" className="block  ">
-        <span className="block text-gray-600">Nome da coluna</span>
-        <input type="text" name="" id="" placeholder="Nova Coluna" />
+        <span className="block  text-gray-600">Nome da coluna</span>
+        <input type="text" placeholder="Nova Coluna" />
       </label>
       <button type="submit" className="mt-2 block w-full">
         Criar coluna

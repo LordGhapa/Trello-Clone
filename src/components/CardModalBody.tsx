@@ -4,18 +4,21 @@ import {
   useStorage,
   useThreads,
 } from "@/app/liveblocks.config";
-import { faComments, faEllipsis, faFileLines } from "@fortawesome/free-solid-svg-icons";
+import {  faEllipsis, faFileLines } from "@fortawesome/free-solid-svg-icons";
+import { faComments } from "@fortawesome/free-regular-svg-icons";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useParams, useRouter } from "next/navigation";
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import DeleteWithConfirmation from "./DeleteWithConfirmation";
 import CancelButton from "./CancelButton";
-import { Thread } from '@liveblocks/react-comments';
-import { Composer } from '@liveblocks/react-comments';
+import { Thread } from "@liveblocks/react-comments";
+import { Composer } from "@liveblocks/react-comments";
 import { useBoardContext } from "@/app/context/BoardContext";
 import { shallow } from "@liveblocks/client";
 import CardDescription from "./CardDescription";
+import "@liveblocks/react-comments/styles.css";
 
 export default function CardModalBody() {
   const router = useRouter();
@@ -77,7 +80,7 @@ export default function CardModalBody() {
     <>
       {!editMode && (
         <div className="flex justify-between">
-          <h4 className="text-2xl">{card?.name}</h4>
+          <h4 className="text-2xl font-semibold">{card?.name}</h4>
           <button className="text-gray-400" onClick={() => setEditMode(true)}>
             <FontAwesomeIcon icon={faEllipsis} />
           </button>
@@ -103,13 +106,13 @@ export default function CardModalBody() {
             <FontAwesomeIcon icon={faFileLines} />
             Descrição
           </h2>
-          {/* <CardDescription /> */}
+          <CardDescription />
           <h2 className="mt-4 flex items-center gap-2">
             <FontAwesomeIcon icon={faComments} />
             Comentários
           </h2>
           <div className="-mx-4">
-            {/* {threads &&
+            {threads &&
               threads.map((thread) => (
                 <div key={thread.id}>
                   <Thread thread={thread} id={thread.id} />
@@ -119,7 +122,7 @@ export default function CardModalBody() {
               <div>
                 <Composer metadata={{ cardId: params.cardId.toString() }} />
               </div>
-            )} */}
+            )}
           </div>
         </div>
       )}

@@ -11,8 +11,7 @@ export default function EmailsAccessList({
 }) {
   const route = useRouter();
   const handleDelete = async (email: string) => {
-    console.log(boardInfo.id);
-    console.log(email);
+
     await removeEmailFromBoard(boardInfo.id, email);
     route.refresh();
   };
@@ -21,9 +20,9 @@ export default function EmailsAccessList({
       {Object.keys(boardInfo.usersAccesses).map((email) => (
         <div
           key={email}
-          className="my-4  flex max-w-xs items-center justify-between gap-2  rounded-lg border pl-4"
+          className="my-4  flex max-w-xs items-center justify-between gap-2  rounded-lg border pl-4 bg-white"
         >
-          <span className="line-clamp-1  " title={email}>
+          <span className="line-clamp-1 " title={email}>
             {email}{" "}
           </span>
           <button onClick={() => handleDelete(email)} className="btn">

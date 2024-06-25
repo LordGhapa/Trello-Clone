@@ -11,7 +11,8 @@ export default function Columns() {
     shallow,
   );
 
-  const updateColumns = useMutation( ({ storage }, columns: LiveObject<ColumnType>[]) => {
+  const updateColumns = useMutation(
+    ({ storage }, columns: LiveObject<ColumnType>[]) => {
       storage.set("columns", new LiveList(columns));
     },
     [],
@@ -27,18 +28,18 @@ export default function Columns() {
     });
     updateColumns(newColumns);
   }
-  
-   if (!columns) {
-     return null;
-   }
+
+  if (!columns) {
+    return null;
+  }
 
   return (
-    <div className="flex gap-4">
+    <div className="flex justify-between gap-1">
       <ReactSortable
         group={"column"}
         list={columns}
         ghostClass="opacity-40"
-        className=" flex  gap-4"
+        className=" flex  flex-wrap gap-4"
         setList={(newState) => setColumnsOrder(newState)}
       >
         {columns.map((column) => (

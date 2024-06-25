@@ -5,9 +5,6 @@
 body {
   background-color: #f6f7fb;
 }
-body {
-  background-color: #b4b4b4;
-}
 
 button[type="submit"],
 button.primary,
@@ -18,8 +15,7 @@ button[type="submit"],
 .primary {
   @apply border-blue-500 bg-blue-500 text-white;
 }
-input[type="text"],
-input[type="email"] {
+input[type="text"] {
   @apply block w-full rounded-md;
 }
 button.btn.red {
@@ -57,24 +53,24 @@ button.with-icon {
   pointer-events: none;
 }
 
-.editor-buttons {
-  button {
-    @apply rounded-md border px-2 py-1 text-sm text-gray-700;
-  }
-  button.active {
-    @apply bg-gray-200 text-gray-900;
-  }
+.editor-buttons button {
+  @apply rounded-md border px-2 py-1 text-sm text-gray-700;
+}
+.editor-buttons button.active {
+  @apply bg-gray-200 text-gray-900;
 }
 
 .tiptap {
   @apply rounded-md border p-2;
-  &:focus-visible {
-    outline: 0;
-    @apply border-blue-500;
-  }
-  h2 {
-    @apply text-2xl;
-  }
+}
+
+.tiptap :focus-visible {
+  outline: 0;
+  @apply border-blue-500;
+}
+
+.tiptap h2 {
+  @apply text-2xl;
 }
 
 .lb-portal {

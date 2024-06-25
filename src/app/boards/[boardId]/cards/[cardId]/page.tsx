@@ -6,7 +6,7 @@ type CardPageProps = {
 };
 
 export default function CardPage({ params }: CardPageProps) {
-  console.log(params);
+ 
   return (
     <div>
       <BoardPage params={params} />
