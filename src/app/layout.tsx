@@ -19,6 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg" />
+      </head>
       <body className={inter.className}>
         <SessionProviderContext>
           <Header />
