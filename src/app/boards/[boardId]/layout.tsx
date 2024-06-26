@@ -16,7 +16,7 @@ export default function BoardLayout({
     <BoardContextProvider>
       <RoomProvider
         id={params.boardId.toString() as string}
-        initialPresence={[]}
+        initialPresence={{}}
         initialStorage={{
           columns: new LiveList(),
           cards: new LiveList(),

@@ -3,6 +3,7 @@ import { useBoardContext } from "@/app/context/BoardContext";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import PresenceAvatars from "./PresenceAvatars";
 
 type CardProps = {
   id: string;
@@ -25,9 +26,12 @@ export default function Card({ id, name }: CardProps) {
   return (
     <Link
       href={`/boards/${params.boardId}/cards/${id}`}
-      className="my-2 block rounded-md border bg-white p-4"
+      className="relative my-2 block rounded-md border bg-white p-4 py-8"
     >
       <span>{name}</span>
+      <div className="absolute bottom-1 right-1">
+        <PresenceAvatars presenceKey={"cardId"} presenceValue={id} />
+      </div>
     </Link>
   );
 }

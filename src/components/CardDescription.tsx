@@ -42,6 +42,7 @@ export default function CardDescription() {
         doc={doc}
         provider={provider}
         cardId={cardId.toString()}
+
       />
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
-import { FormEvent, useState } from "react";
-import { RoomProvider } from "@/app/liveblocks.config";
+import { FormEvent, useEffect, useState } from "react";
+import { RoomProvider, useUpdateMyPresence } from "@/app/liveblocks.config";
 import { LiveList } from "@liveblocks/client";
 import { ClientSideSuspense } from "@liveblocks/react";
 import Columns from "./Columns";
@@ -18,6 +18,15 @@ type BoardProps = {
 export default function Board({ id, name }: BoardProps) {
   const [renameMode, setRenameMode] = useState(false);
   const route = useRouter();
+  const updateMyPresence = useUpdateMyPresence();
+
+  useEffect(() => {
+    updateMyPresence({ boardId: id });
+
+    return () => {
+      updateMyPresence({ boardId: null });
+    };
+  }, []);
 
   const handleNameSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,52 +40,53 @@ export default function Board({ id, name }: BoardProps) {
     route.refresh();
   };
   return (
-    
-      <RoomProvider
-        id={id}
-        initialPresence={{}}
-        initialStorage={{
-          columns: new LiveList(),
-          cards: new LiveList(),
-        }}
-      >
-        <ClientSideSuspense fallback={<div>"Carregando..."</div>}>
-          {() => (
-            <>
-              <div className="mb-4 flex items-center justify-between gap-2">
-                <div>
-                  {!renameMode && (
-                    <h1
-                      className="cursor-pointer text-2xl"
-                      onClick={() => setRenameMode(true)}
-                    >
-                      Quadro de Atividades: {name}
-                    </h1>
-                  )}
-                  {renameMode && (
-                    <form onSubmit={handleNameSubmit}>
-                      <input
-                        type="text"
-                        autoFocus
-                        defaultValue={name}
-                        onBlur={() => setRenameMode(false)}
-                      />
-                    </form>
-                  )}
-                </div>
-                <Link
-                  className="btn flex items-center gap-2"
-                  href={`/boards/${id}/settings`}
-                >
-                  <FontAwesomeIcon icon={faCog} />
-                  Configurações
-                </Link>
+    <RoomProvider
+      id={id}
+      initialPresence={{
+        cardId: null,
+        boardId: null,
+      }}
+      initialStorage={{
+        columns: new LiveList(),
+        cards: new LiveList(),
+      }}
+    >
+      <ClientSideSuspense fallback={<div>"Carregando..."</div>}>
+        {() => (
+          <>
+            <div className="mb-4 flex items-center justify-between gap-2">
+              <div>
+                {!renameMode && (
+                  <h1
+                    className="cursor-pointer text-2xl"
+                    onClick={() => setRenameMode(true)}
+                  >
+                    Quadro de Atividades: {name}
+                  </h1>
+                )}
+                {renameMode && (
+                  <form onSubmit={handleNameSubmit}>
+                    <input
+                      type="text"
+                      autoFocus
+                      defaultValue={name}
+                      onBlur={() => setRenameMode(false)}
+                    />
+                  </form>
+                )}
               </div>
-              <Columns />
-            </>
-          )}
-        </ClientSideSuspense>
-      </RoomProvider>
-    
+              <Link
+                className="btn flex items-center gap-2"
+                href={`/boards/${id}/settings`}
+              >
+                <FontAwesomeIcon icon={faCog} />
+                Configurações
+              </Link>
+            </div>
+            <Columns />
+          </>
+        )}
+      </ClientSideSuspense>
+    </RoomProvider>
   );
 }
